@@ -1,102 +1,53 @@
 import React, { useState, useEffect } from "react";
-import "./App.css";
-import TaskForm from "./components/TaskForm";
-import TaskList from "./components/TaskList";
-import Loader from "./components/loader";
+import axios from "axios";
+import ToDoList from "./components/ToDoList";
+import ToDoForm from "./components/ToDoForm";
 
-const App = () => {
-  const [tasks, setTasks] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const API_ENDPOINT = `https://dev.hisptz.com/dhis2/api/dataStore/allen_mgeyekwa?fields=.`;
+function App() {
+  const [todos, setTodos] = useState([]);
+  const [error, setError] = useState(null); // state for storing any error message
 
   useEffect(() => {
-    fetchTasks();
+    const fetchToDos = async () => {
+      try {
+        const response = await axios.get(
+          "https://dev.hisptz.com/dhis2/api/dataStore/allen_mgeyekwa?fields=.",
+          {
+            auth: {
+              username: "admin",
+              password: "district",
+            },
+          }
+        );
+
+        if (response.data.entries) {
+          setTodos(response.data.entries.map((entry) => entry.value));
+        }
+
+        setError(null); // If the request is successful, clear any previous error
+      } catch (error) {
+        // If the request fails, save the error message to display it
+        setError(error.response ? error.response.data.message : error.message);
+      }
+    };
+
+    fetchToDos();
   }, []);
 
-  const fetchTasks = async () => {
-    setLoading(true);
-    try {
-      const response = await fetch(API_ENDPOINT, {
-        headers: {
-          Authorization: `Basic ${btoa("admin:district")}`,
-        },
-      });
-
-      if (response.ok) {
-        console.log('Successfully connected to API');
-        const data = await response.json();
-        setTasks(data.entries);
-      } else if (response.status === 404) {
-        console.log('No tasks found');
-        setTasks([]);
-      } else {
-        console.error('Failed to connect to API');
-      }
-    } catch (error) {
-      console.error('Error fetching tasks:', error);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const addTask = async (task) => {
-    const response = await fetch(`https://dev.hisptz.com/dhis2/api/dataStore/allen_mgeyekwa/${task.id}`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Basic ${btoa("admin:district")}`,
-      },
-      body: JSON.stringify(task)
-    });
-    if (response.ok) {
-      console.log(`Task added: ${task.id}`);
-      fetchTasks();  // Update the task list after adding a new task
-    }
-    else {
-      console.error(`Failed to add task: ${task.id}`);
-    }
-  };
-  
-  const updateTask = async (id, updatedTask) => {
-    const response = await fetch(`https://dev.hisptz.com/dhis2/api/dataStore/allen_mgeyekwa/${id}`, {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Basic ${btoa("admin:district")}`,
-      },
-      body: JSON.stringify(updatedTask)
-    });
-    if (response.ok) {
-      console.log(`Task updated: ${id}`);
-      fetchTasks();  // Update the task list after updating a task
-    }
-    else {
-      console.error(`Failed to update task: ${id}`);
-    }
-  };
-  
-  const deleteTask = async (id) => {
-    const response = await fetch(`https://dev.hisptz.com/dhis2/api/dataStore/allen_mgeyekwa/${id}`, {
-      method: 'DELETE',
-      headers: {
-        'Authorization': `Basic ${btoa("admin:district")}`,
-      }
-    });
-    if (response.ok) {
-      console.log(`Task deleted: ${id}`);
-      fetchTasks();  // Update the task list after deleting a task
-    }
-    else {
-      console.error(`Failed to delete task: ${id}`);
-    }
+  const addToDo = (todo) => {
+    setTodos([...todos, todo]);
   };
 
   return (
     <div className="App">
-      <TaskForm addTask={addTask} />
-      {loading ? <Loader /> : <TaskList tasks={tasks} updateTask={updateTask} deleteTask={deleteTask} />}
+      <h1>To-Do Application</h1>
+      <ToDoForm addToDo={addToDo} />
+      {/* Display the fetched to-do items */}
+      <ToDoList todos={todos} />
+      {/* Display an error message if there is one */}
+      {error && <div>Error: {error}</div>}
     </div>
   );
-};
+}
 
 export default App;
