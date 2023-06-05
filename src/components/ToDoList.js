@@ -1,6 +1,6 @@
 import React from "react";
 
-const ToDoList = ({ todos, onDelete }) => {
+const ToDoList = ({ todos, onDelete, enableEdit }) => {
   return (
     <table className="min-w-full divide-y divide-gray-200">
       <thead className="bg-gray-50">
@@ -47,8 +47,14 @@ const ToDoList = ({ todos, onDelete }) => {
             </td>
             <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
               <button
+                onClick={() => enableEdit(todo)}
+                className="p-1 bg-blue-500 text-white rounded-md ml-2"
+              >
+                Update
+              </button>
+              <button
                 onClick={() => onDelete(todo.id)}
-                className="text-indigo-600 hover:text-indigo-900"
+                className="p-1 bg-blue-500 text-white rounded-md ml-2"
               >
                 Delete
               </button>
