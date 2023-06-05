@@ -38,12 +38,29 @@ function App() {
     setTodos([...todos, todo]);
   };
 
+  const deleteTodo = async (id) => {
+    try {
+      await axios.delete(
+        `https://dev.hisptz.com/dhis2/api/dataStore/allen_mgeyekwa/${id}`,
+        {
+          auth: {
+            username: "admin",
+            password: "district",
+          },
+        }
+      );
+      setTodos(todos.filter((todo) => todo.id !== id));
+    } catch (error) {
+      console.error("Failed to delete todo:", error);
+    }
+  };
+
   return (
     <div className="App">
       <h1>To-Do Application</h1>
       <ToDoForm addToDo={addToDo} />
       {/* Display the fetched to-do items */}
-      <ToDoList todos={todos} />
+      <ToDoList todos={todos} onDelete={deleteTodo} />
       {/* Display an error message if there is one */}
       {error && <div>Error: {error}</div>}
     </div>
