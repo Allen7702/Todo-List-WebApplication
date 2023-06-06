@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import ToDoList from "./components/ToDoList";
 import ToDoForm from "./components/ToDoForm";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function App() {
   const [todos, setTodos] = useState([]);
@@ -23,17 +25,17 @@ function App() {
       if (response.data.entries) {
         setTodos(response.data.entries.map((entry) => entry.value));
       }
-
-      setError(null); // If the request is successful, clear any previous error
+      toast.success("ToDo Added Successfully");
     } catch (error) {
       // If the request fails, save the error message to display it
       setError(error.response ? error.response.data.message : error.message);
+      toast.error("Failed to add ToDo");
     }
   };
 
-  const addToDo = (todo) => {
-    setTodos([...todos, todo]);
-  };
+  // const addToDo = (todo) => {
+  //   setTodos([...todos, todo]);
+  // };
 
   const deleteTodo = async (id) => {
     try {
@@ -47,14 +49,12 @@ function App() {
         }
       );
       setTodos(todos.filter((todo) => todo.id !== id));
+      toast.success("ToDo Deleted Successfully");
     } catch (error) {
       console.error("Failed to delete todo:", error);
+      toast.error("Failed to delete ToDo");
     }
   };
-
-  // const updateTodo = (todo) => {
-  //   setTodoToUpdate(todo);
-  // };
 
   const enableEdit = (todo) => {
     setTodoToUpdate(todo);
@@ -85,11 +85,77 @@ function App() {
       .then((response) => {
         if (response.ok) {
           console.log("ToDo Updated Successfully");
+          toast.success("ToDo Updated Successfully");
         } else {
           throw new Error("Error updating ToDo");
         }
       })
+
       .catch((error) => console.log(error));
+  };
+
+  const completeTodo = async (todoId) => {
+    try {
+      const todoToUpdate = todos.find((todo) => todo.id === todoId);
+      if (!todoToUpdate) throw new Error("Todo not found");
+
+      const updatedTodo = {
+        ...todoToUpdate,
+        completed: !todoToUpdate.completed,
+      };
+
+      await axios.put(
+        `https://dev.hisptz.com/dhis2/api/dataStore/allen_mgeyekwa/${todoId}`,
+        updatedTodo,
+        {
+          auth: {
+            username: "admin",
+            password: "district",
+          },
+        }
+      );
+
+      fetchTodos(); // Refreshs the todos to display the updated completion status
+    } catch (error) {
+      console.error("Failed to update todo completion status:", error);
+    }
+  };
+
+  // Define the function for deleting all to-dos
+  const deleteAllTodos = async () => {
+    try {
+      // Fetch all keys in the namespace
+      const response = await axios.get(
+        "https://dev.hisptz.com/dhis2/api/dataStore/allen_mgeyekwa",
+        {
+          auth: {
+            username: "admin",
+            password: "district",
+          },
+        }
+      );
+
+      // For each key, send a DELETE request
+      for (const key of response.data) {
+        await axios.delete(
+          `https://dev.hisptz.com/dhis2/api/dataStore/allen_mgeyekwa/${key}`,
+          {
+            auth: {
+              username: "admin",
+              password: "district",
+            },
+          }
+        );
+      }
+
+      // Clear the local state
+      setTodos([]);
+      console.log("All todos deleted successfully");
+      toast.success("All ToDos Deleted Successfully");
+    } catch (error) {
+      console.error("Failed to delete todos:", error);
+      toast.error("Failed to delete all ToDos");
+    }
   };
 
   useEffect(() => {
@@ -98,14 +164,26 @@ function App() {
 
   return (
     <div className="App p-10 ">
+      <ToastContainer />
       <h1 className="text-center text-4xl">ToDo Application</h1>
       <ToDoForm
         fetchTodos={fetchTodos}
         updateTodo={updateTodo}
         todoToUpdate={todoToUpdate}
       />
+      <button
+        onClick={deleteAllTodos}
+        className="self-end p-2 bg-red-500 text-white rounded-md mt-4"
+      >
+        Delete All Tasks
+      </button>
       {/* Display the fetched to-do items */}
-      <ToDoList todos={todos} onDelete={deleteTodo} enableEdit={enableEdit} />
+      <ToDoList
+        todos={todos}
+        onDelete={deleteTodo}
+        enableEdit={enableEdit}
+        onComplete={completeTodo}
+      />
       {/* Display an error message if there is one */}
       {error && <div>Error: {error}</div>}
     </div>
