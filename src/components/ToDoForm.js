@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { v4 as uuidv4 } from "uuid";
 
-const ToDoForm = ({ fetchTodos, updateTodo, todoToUpdate }) => {
+const ToDoForm = ({ fetchTodos }) => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [error, setError] = useState(null); // New state for storing any error message
@@ -11,42 +11,42 @@ const ToDoForm = ({ fetchTodos, updateTodo, todoToUpdate }) => {
     event.preventDefault();
 
     const todo = {
-      id: todoToUpdate ? todoToUpdate.id : "todo-" + uuidv4(),
+      id: "todo-" + uuidv4(),
       title,
       description,
       completed: false,
-      created: todoToUpdate ? todoToUpdate.created : new Date().toISOString(), // If updating, keep the original creation date
+      created: new Date().toISOString(),
       lastUpdated: new Date().toISOString(),
     };
 
     try {
-      if (todoToUpdate) {
-        await axios.put(
-          `https://dev.hisptz.com/dhis2/api/dataStore/allen_mgeyekwa/${todoToUpdate.id}`,
-          todo,
-          {
-            auth: {
-              username: "admin",
-              password: "district",
-            },
-          }
-        );
-        updateTodo({
-          ...todo,
-          lastUpdated: new Date().toISOString(),
-        });
-      } else {
-        await axios.post(
-          `https://dev.hisptz.com/dhis2/api/dataStore/allen_mgeyekwa/${todo.id}`,
-          todo,
-          {
-            auth: {
-              username: "admin",
-              password: "district",
-            },
-          }
-        );
-      }
+      // if (todoToUpdate) {
+      //   await axios.put(
+      //     `https://dev.hisptz.com/dhis2/api/dataStore/allen_mgeyekwa/${todoToUpdate.id}`,
+      //     todo,
+      //     {
+      //       auth: {
+      //         username: "admin",
+      //         password: "district",
+      //       },
+      //     }
+      //   );
+      //   updateTodo({
+      //     ...todo,
+      //     lastUpdated: new Date().toISOString(),
+      //   });
+      // } else {
+      await axios.post(
+        `https://dev.hisptz.com/dhis2/api/dataStore/allen_mgeyekwa/${todo.id}`,
+        todo,
+        {
+          auth: {
+            username: "admin",
+            password: "district",
+          },
+        }
+      );
+      // }
 
       //addToDo(todo);
 
@@ -59,14 +59,6 @@ const ToDoForm = ({ fetchTodos, updateTodo, todoToUpdate }) => {
       setError(error.response ? error.response.data.message : error.message);
     }
   };
-  useEffect(() => {
-    if (todoToUpdate) {
-      setTitle(todoToUpdate.title);
-      setDescription(todoToUpdate.description);
-    }
-  }, [todoToUpdate]);
-
-  const buttonText = todoToUpdate ? "Update" : "Add Task";
 
   return (
     <form onSubmit={handleSubmit} className="flex flex-col my-4">
@@ -92,7 +84,7 @@ const ToDoForm = ({ fetchTodos, updateTodo, todoToUpdate }) => {
         type="submit"
         className="self-end p-2 bg-blue-500 text-white rounded-md mt-4"
       >
-        {buttonText} {/* Display the appropriate text */}
+        Add Task
       </button>
 
       {/* Display an error message if there is one */}

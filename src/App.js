@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import ToDoList from "./components/ToDoList";
 import ToDoForm from "./components/ToDoForm";
+import UpdateToDoModal from "./components/UpdateToDoModal";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -9,7 +10,16 @@ function App() {
   const [todos, setTodos] = useState([]);
   const [todoToUpdate, setTodoToUpdate] = useState(null); // New state for storing the to-do item to update
   const [error, setError] = useState(null); // state for storing any error message
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
+  const enableEdit = (todo) => {
+    setTodoToUpdate(todo);
+    setIsModalOpen(true); // Open the modal
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false); // Close the modal
+  };
   const fetchTodos = async () => {
     try {
       const response = await axios.get(
@@ -33,10 +43,6 @@ function App() {
     }
   };
 
-  // const addToDo = (todo) => {
-  //   setTodos([...todos, todo]);
-  // };
-
   const deleteTodo = async (id) => {
     try {
       await axios.delete(
@@ -56,9 +62,9 @@ function App() {
     }
   };
 
-  const enableEdit = (todo) => {
-    setTodoToUpdate(todo);
-  };
+  // const enableEdit = (todo) => {
+  //   setTodoToUpdate(todo);
+  // };
 
   const updateTodo = (todoId, updatedTitle, updatedDescription) => {
     // The updatedTodo object now doesn't include the `created` field
@@ -163,29 +169,38 @@ function App() {
   }, []);
 
   return (
-    <div className="App p-10 ">
+    <div className="App p-10 p-10 bg-gray-100 h-screen">
       <ToastContainer />
-      <h1 className="text-center text-4xl">ToDo Application</h1>
-      <ToDoForm
-        fetchTodos={fetchTodos}
-        updateTodo={updateTodo}
-        todoToUpdate={todoToUpdate}
-      />
-      <button
-        onClick={deleteAllTodos}
-        className="self-end p-2 bg-red-500 text-white rounded-md mt-4"
-      >
-        Delete All Tasks
-      </button>
-      {/* Display the fetched to-do items */}
-      <ToDoList
-        todos={todos}
-        onDelete={deleteTodo}
-        enableEdit={enableEdit}
-        onComplete={completeTodo}
-      />
-      {/* Display an error message if there is one */}
-      {error && <div>Error: {error}</div>}
+      <h1 className="text-center text-4xl text-blue-800">ToDo Application</h1>
+      <div className="container mx-auto  bg-gray-300 shadow-md rounded-md p-5">
+        <ToDoForm fetchTodos={fetchTodos} />
+        <button
+          onClick={deleteAllTodos}
+          className="self-end p-2 bg-red-500 text-white rounded-md mt-4 hover:bg-red-600"
+        >
+          Delete All Tasks
+        </button>
+        {/* Display the fetched to-do items */}
+        <ToDoList
+          todos={todos}
+          onDelete={deleteTodo}
+          enableEdit={enableEdit}
+          onComplete={completeTodo}
+          show={isModalOpen}
+          onClose={closeModal}
+        />
+        <UpdateToDoModal
+          fetchTodos={fetchTodos}
+          todoToUpdate={todoToUpdate}
+          setTodoToUpdate={setTodoToUpdate}
+        />
+        {/* Display an error message if there is one */}
+        {error && (
+          <div className="mt-4 bg-red-500 text-white p-3 rounded-md">
+            Error: {error}
+          </div>
+        )}
+      </div>
     </div>
   );
 }
