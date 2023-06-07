@@ -1,6 +1,8 @@
 <h3 align="center">This is a full-featured To-Do application built with React and DHIS2 dataStore API. It features a clean and responsive user interface styled with Tailwind CSS.</h3>
 
-<p align="left"> <img src="https://komarev.com/ghpvc/?username=allen7702&label=Profile%20views&color=0e75b6&style=flat" alt="allen7702" /> </p>
+![todo-1](https://github.com/Allen7702/Todo-List-WebApplication/assets/83769589/992ea257-2b5b-4d62-ba77-b978942f1e07)
+
+![todo-mobile](https://github.com/Allen7702/Todo-List-WebApplication/assets/83769589/e1ff9580-b815-4dfb-9c27-b847a0b96986)
 
 ## Features
 
@@ -22,5 +24,5 @@
 
 <h3 align="left">Connect with me:</h3>
 <p align="left">
-<a href="https://linkedin.com/in/allen mgeyekwa" target="blank"><img align="center" src="https://raw.githubusercontent.com/rahuldkjain/github-profile-readme-generator/master/src/images/icons/Social/linked-in-alt.svg" alt="allen mgeyekwa" height="30" width="40" /></a>
+<a href="https://linkedin.com/in/allen-mgeyekwa" target="blank"><img align="center" src="https://raw.githubusercontent.com/rahuldkjain/github-profile-readme-generator/master/src/images/icons/Social/linked-in-alt.svg" alt="allen-mgeyekwa" height="30" width="40" /></a>
 </p>
