@@ -171,17 +171,17 @@ function App() {
   }, []);
 
   return (
-    <div className="App p-10 p-10  h-screen">
+    <div className="App  md:p-10  h-screen">
       <ToastContainer />
       <h1 className="text-center text-7xl  font-bold mb-4 gradient-text">
         TODO
       </h1>
-      <div className="container mx-auto  bg-gray-300 shadow-md rounded-md p-5">
+      <div className="md:container md:mx-auto  bg-gray-400 shadow-md rounded-lg md:p-5 p-2 ">
         <h2 className="mb-4">Total Tasks: {todos.length}</h2>
         <ToDoForm fetchTodos={fetchTodos} />
 
-        <div className="flex justify-between items-center my-4">
-          <h2 className="text-xl font-semibold">Tasks</h2>
+        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center my-4">
+          <h2 className="text-xl font-semibold mb-2 sm:mb-0">Tasks</h2>
           <div className="flex gap-2">
             <button
               className={`px-2 rounded ${
@@ -217,7 +217,7 @@ function App() {
               onClick={deleteAllTodos}
               className="self-end px-2 border border-red-500 text-red-500 bg-white  hover:bg-red-500 hover:text-white rounded-full h-7"
             >
-              Delete All Tasks
+              Delete All
             </button>
           </div>
         </div>

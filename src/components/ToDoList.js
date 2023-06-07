@@ -12,15 +12,15 @@ const ToDoList = ({ todos, onDelete, enableEdit, onComplete }) => {
         <div className="w-1/4 md:w-1/6 text-right">Actions</div>
       </div>
       {todos.map((todo) => (
-        <div className="flex text-gray-700 p-2" key={todo.id}>
-          <div className="w-1/4 md:w-1/6">
+        <div className="flex text-gray-700 p-2 bg-gray-100" key={todo.id}>
+          <div className="w-1/4 md:w-1/6 flex items-center ">
             <input
               type="checkbox"
               checked={todo.completed}
               onChange={() => onComplete(todo.id)}
-              className="mr-2 align-middle"
+              className="form-checkbox md:ml-2  h-5 w-5 text-blue-500 rounded-full"
             />
-            {todo.title}
+            <div className="md:ml-10">{todo.title}</div>
           </div>
           <div className="w-1/2 md:w-3/6">{todo.description}</div>
           <div className="hidden md:block md:w-1/6">
