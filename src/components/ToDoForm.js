@@ -20,22 +20,6 @@ const ToDoForm = ({ fetchTodos }) => {
     };
 
     try {
-      // if (todoToUpdate) {
-      //   await axios.put(
-      //     `https://dev.hisptz.com/dhis2/api/dataStore/allen_mgeyekwa/${todoToUpdate.id}`,
-      //     todo,
-      //     {
-      //       auth: {
-      //         username: "admin",
-      //         password: "district",
-      //       },
-      //     }
-      //   );
-      //   updateTodo({
-      //     ...todo,
-      //     lastUpdated: new Date().toISOString(),
-      //   });
-      // } else {
       await axios.post(
         `https://dev.hisptz.com/dhis2/api/dataStore/allen_mgeyekwa/${todo.id}`,
         todo,
@@ -46,9 +30,6 @@ const ToDoForm = ({ fetchTodos }) => {
           },
         }
       );
-      // }
-
-      //addToDo(todo);
 
       setTitle("");
       setDescription("");

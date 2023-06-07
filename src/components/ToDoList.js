@@ -1,60 +1,47 @@
 import React from "react";
+import { FaRegTrashAlt, FaRegEdit } from "react-icons/fa";
 
 const ToDoList = ({ todos, onDelete, enableEdit, onComplete }) => {
   return (
-    <table className="min-w-full divide-y divide-gray-200 m-auto">
-      <thead className="bg-gray-50">
-        <tr>
-          <th className="  p-2">Status</th>
-          <th className=" p-2">Title</th>
-          <th className=" p-2">Description</th>
-          <th className=" p-2">Created</th>
-          <th className=" p-2">Completed</th>
-          <th className=" p-2">Last Updated</th>
-          <th className=" p-2">Action</th>
-        </tr>
-      </thead>
-      <tbody className="bg-white divide-y divide-gray-200">
-        {todos.map((todo) => (
-          <tr key={todo.id}>
-            <td className="pl-14">
-              <input
-                type="checkbox"
-                checked={todo.completed}
-                onChange={() => onComplete(todo.id)}
-              />
-            </td>
-            <td className="pl-14 text-sm text-gray-500">{todo.title}</td>
-            <td className="pl-14 text-sm text-gray-500">{todo.description}</td>
-            <td className="pl-14 text-sm text-gray-500">
-              {new Date(todo.created).toLocaleDateString()}{" "}
-              {new Date(todo.created).toLocaleTimeString()}
-            </td>
-            <td className="pl-14 text-sm text-gray-500">
-              {todo.completed ? "Yes" : "No"}
-            </td>
-            <td className=" lr146 text-sm text-gray-500">
-              {new Date(todo.lastUpdated).toLocaleDateString()}{" "}
-              {new Date(todo.lastUpdated).toLocaleTimeString()}
-            </td>
-            <td className="pl-14 text-right text-sm font-medium">
-              <button
-                onClick={() => enableEdit(todo)}
-                className="p-1 bg-blue-500 text-white rounded-md ml-2"
-              >
-                Update
-              </button>
-              <button
-                onClick={() => onDelete(todo.id)}
-                className="p-1 bg-blue-500 text-white rounded-md ml-2"
-              >
-                Delete
-              </button>
-            </td>
-          </tr>
-        ))}
-      </tbody>
-    </table>
+    <div className="divide-y divide-gray-200 m-auto shadow-lg bg-white rounded-lg">
+      <div className="flex bg-blue-500 text-white p-2">
+        <div className="w-1/4 md:w-1/6">Title</div>
+        <div className="w-1/2 md:w-3/6">Description</div>
+        <div className="hidden md:block md:w-1/6">Created</div>
+        <div className="hidden md:block md:w-1/6">Last Updated</div>
+        <div className="w-1/4 md:w-1/6 text-right">Actions</div>
+      </div>
+      {todos.map((todo) => (
+        <div className="flex text-gray-700 p-2" key={todo.id}>
+          <div className="w-1/4 md:w-1/6">
+            <input
+              type="checkbox"
+              checked={todo.completed}
+              onChange={() => onComplete(todo.id)}
+              className="mr-2 align-middle"
+            />
+            {todo.title}
+          </div>
+          <div className="w-1/2 md:w-3/6">{todo.description}</div>
+          <div className="hidden md:block md:w-1/6">
+            {new Date(todo.created).toLocaleDateString()}{" "}
+            {new Date(todo.created).toLocaleTimeString()}
+          </div>
+          <div className="hidden md:block md:w-1/6">
+            {new Date(todo.lastUpdated).toLocaleDateString()}{" "}
+            {new Date(todo.lastUpdated).toLocaleTimeString()}
+          </div>
+          <div className="w-1/4 md:w-1/6 text-right">
+            <button onClick={() => enableEdit(todo)} className="p-1">
+              <FaRegEdit className="text-blue-500 text-2xl mr-1" />
+            </button>
+            <button onClick={() => onDelete(todo.id)} className="p-1">
+              <FaRegTrashAlt className="text-red-500 text-2xl mr-1" />
+            </button>
+          </div>
+        </div>
+      ))}
+    </div>
   );
 };
 

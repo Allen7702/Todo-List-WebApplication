@@ -1,15 +1,11 @@
 .App {
   text-align: center;
-}
 
-.pop-modal {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  background-color: #a2b6a0;
+  background-image: linear-gradient(to right, #8b8f8a, #1d98cc);
+}
+.gradient-text {
+  background: linear-gradient(to right, blue, red);
+  -webkit-background-clip: text;
+  color: transparent;
 }
