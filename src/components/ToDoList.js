@@ -3,7 +3,7 @@ import { FaRegTrashAlt, FaRegEdit } from "react-icons/fa";
 
 const ToDoList = ({ todos, onDelete, enableEdit, onComplete }) => {
   return (
-    <div className="divide-y divide-gray-200 m-auto shadow-lg bg-white rounded-lg">
+    <div className="divide-y divide-gray-200 m-auto shadow-lg bg-white rounded-lg mb-10">
       <div className="flex bg-blue-500 text-white p-2">
         <div className="w-1/4 md:w-1/6">Title</div>
         <div className="w-1/2 md:w-3/6">Description</div>
@@ -12,7 +12,7 @@ const ToDoList = ({ todos, onDelete, enableEdit, onComplete }) => {
         <div className="w-1/4 md:w-1/6 text-right">Actions</div>
       </div>
       {todos.map((todo) => (
-        <div className="flex text-gray-700 p-2 bg-gray-100" key={todo.id}>
+        <div className="flex text-gray-700 p-2  bg-gray-100" key={todo.id}>
           <div className="w-1/4 md:w-1/6 flex items-center ">
             <input
               type="checkbox"

@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import axios from "axios";
 import { v4 as uuidv4 } from "uuid";
+import { IoIosAdd } from "react-icons/io";
 
 const ToDoForm = ({ fetchTodos }) => {
   const [title, setTitle] = useState("");
@@ -42,13 +43,13 @@ const ToDoForm = ({ fetchTodos }) => {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="flex flex-col my-4">
+    <form onSubmit={handleSubmit} className="flex flex-col my-4 items-center">
       <input
         type="text"
         value={title}
         onChange={(e) => setTitle(e.target.value)}
         placeholder="Title"
-        className="my-2 p-2 border-2 border-gray-200 rounded-md md:w-3/6 mx-auto"
+        className="my-2 p-2 bg-[rgba(255,255,255,0.7)] backdrop-blur-md rounded-md w-full md:w-4/5 mx-auto border border-gray-200 border-opacity-20 shadow-lg"
         required
       />
 
@@ -57,15 +58,15 @@ const ToDoForm = ({ fetchTodos }) => {
         value={description}
         onChange={(e) => setDescription(e.target.value)}
         placeholder="Description"
-        className="my-2 p-2 border-2 border-gray-200 rounded-md md:w-3/6 mx-auto"
+        className="my-2 p-2 bg-[rgba(255,255,255,0.7)] backdrop-blur-md rounded-lg w-full md:w-4/5 mx-auto border border-gray-200 border-opacity-20 shadow-lg"
         required
       />
 
       <button
         type="submit"
-        className="self-end p-2 bg-blue-500 text-white rounded-md mt-4"
+        className="flex items-center justify-center p-2 font-bold text-lg text-gray-100 rounded-lg  mt-4 w-full md:w-4/5 backdrop-filter backdrop-blur-md bg-opacity-30 hover:bg-opacity-40 transition duration-200 ease-in-out bg-blue-500 shadow-xl hover:scale-105 hover:bg-blue-600"
       >
-        Add Task
+        <IoIosAdd className="mr-2 w-10 h-10" /> Add Task
       </button>
 
       {/* Display an error message if there is one */}

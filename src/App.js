@@ -6,6 +6,7 @@ import UpdateToDoModal from "./components/UpdateToDoModal";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "./App.css";
+import logo from "./Assets/icon1.png";
 
 function App() {
   const [todos, setTodos] = useState([]);
@@ -64,44 +65,6 @@ function App() {
     }
   };
 
-  // const enableEdit = (todo) => {
-  //   setTodoToUpdate(todo);
-  // };
-
-  const updateTodo = (todoId, updatedTitle, updatedDescription) => {
-    // The updatedTodo object now doesn't include the `created` field
-    const updatedTodo = {
-      id: todoId,
-      title: updatedTitle,
-      description: updatedDescription,
-      completed: false,
-      // `lastUpdated` is now set to the current date and time
-      lastUpdated: new Date().toISOString(),
-    };
-
-    fetch(
-      `https://dev.hisptz.com/dhis2/api/dataStore/allen_mgeyekwa/${todoId}`,
-      {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Basic ${btoa("admin:district")}`,
-        },
-        body: JSON.stringify(updatedTodo),
-      }
-    )
-      .then((response) => {
-        if (response.ok) {
-          console.log("ToDo Updated Successfully");
-          toast.success("ToDo Updated Successfully");
-        } else {
-          throw new Error("Error updating ToDo");
-        }
-      })
-
-      .catch((error) => console.log(error));
-  };
-
   const completeTodo = async (todoId) => {
     try {
       const todoToUpdate = todos.find((todo) => todo.id === todoId);
@@ -143,7 +106,6 @@ function App() {
         }
       );
 
-      // For each key, send a DELETE request
       for (const key of response.data) {
         await axios.delete(
           `https://dev.hisptz.com/dhis2/api/dataStore/allen_mgeyekwa/${key}`,
@@ -171,17 +133,31 @@ function App() {
   }, []);
 
   return (
-    <div className="App  md:p-10  h-screen">
+    <div className="App  md:p-10  min-h-screen w-full ">
       <ToastContainer />
-      <h1 className="text-center text-7xl  font-bold mb-4 gradient-text">
-        TODO
-      </h1>
-      <div className="md:container md:mx-auto  bg-gray-400 shadow-md rounded-lg md:p-5 p-2 ">
-        <h2 className="mb-4">Total Tasks: {todos.length}</h2>
-        <ToDoForm fetchTodos={fetchTodos} />
+      <div className="hidden md:block text-center text-7xl notosan font-bold mb-4 gradient-text">
+        <img src={logo} alt="Logo" className="mx-auto my-4 w-32 h-28" />
+      </div>
+      <div className="md:container md:mx-auto  sm:shadow-md sm:rounded-lg md:p-5 p-2 sm:bg-[rgba(255,255,255,0.1)] sm:backdrop-blur-lg rounded-xl sm:border sm:border-gray-200 sm:border-opacity-20 sm:shadow-lg">
+        <div className="flex flex-col md:flex-row justify-between ">
+          <div className="flex-grow  ">
+            <h2 className="text-4xl font-semibold gradient-text mt-2">
+              Welcome to the ToDo Application!
+            </h2>
+            <p className="text-xl">
+              Organize your tasks efficiently and achieve more.
+            </p>
+            <img src={logo} alt="Logo" className="mx-auto my-4 w-20 h-20" />
+          </div>
+          <div className="flex-grow ">
+            <ToDoForm fetchTodos={fetchTodos} />
+          </div>
+        </div>
 
         <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center my-4">
-          <h2 className="text-xl font-semibold mb-2 sm:mb-0">Tasks</h2>
+          <h2 className="text-xl text-gray-100 font-semibold mb-2 sm:mb-0">
+            Tasks : {todos.length}
+          </h2>
           <div className="flex gap-2">
             <button
               className={`px-2 rounded ${
@@ -217,7 +193,7 @@ function App() {
               onClick={deleteAllTodos}
               className="self-end px-2 border border-red-500 text-red-500 bg-white  hover:bg-red-500 hover:text-white rounded-full h-7"
             >
-              Delete All Tasks
+              Delete All
             </button>
           </div>
         </div>
