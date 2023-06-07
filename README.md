@@ -18,6 +18,27 @@
 
 6. **Responsive Design**: Adapts to different viewport sizes for usability across phones, tablets, and desktops.
 
+7. **Notification**: Notifies user whenever a To-Do item is added, updated or deleted.
+
+## Setup and Installation
+
+To get the project up and running, follow these steps:
+
+1. Clone the repository:
+
+```bash
+git clone https://github.com/Allen7702/Todo-List-WebApplication
+```
+
+2. Install the dependencies:
+```
+cd Todo-List-WebApplication
+npm install
+```
+3.Start the project
+```
+npm start
+```
 
 <h3 align="left">Languages and Tools:</h3>
 <p align="left"> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript" target="_blank" rel="noreferrer"> <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/javascript/javascript-original.svg" alt="javascript" width="40" height="40"/> </a> <a href="https://reactjs.org/" target="_blank" rel="noreferrer"> <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/react/react-original-wordmark.svg" alt="react" width="40" height="40"/> </a> <a href="https://tailwindcss.com/" target="_blank" rel="noreferrer"> <img src="https://www.vectorlogo.zone/logos/tailwindcss/tailwindcss-icon.svg" alt="tailwind" width="40" height="40"/> </a> </p>
