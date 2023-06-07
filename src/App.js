@@ -217,7 +217,7 @@ function App() {
               onClick={deleteAllTodos}
               className="self-end px-2 border border-red-500 text-red-500 bg-white  hover:bg-red-500 hover:text-white rounded-full h-7"
             >
-              Delete All
+              Delete All Tasks
             </button>
           </div>
         </div>

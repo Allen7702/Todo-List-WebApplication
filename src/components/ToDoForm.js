@@ -48,7 +48,7 @@ const ToDoForm = ({ fetchTodos }) => {
         value={title}
         onChange={(e) => setTitle(e.target.value)}
         placeholder="Title"
-        className="my-2 p-2 border-2 border-gray-200 rounded-md"
+        className="my-2 p-2 border-2 border-gray-200 rounded-md md:w-3/6 mx-auto"
         required
       />
 
@@ -57,7 +57,7 @@ const ToDoForm = ({ fetchTodos }) => {
         value={description}
         onChange={(e) => setDescription(e.target.value)}
         placeholder="Description"
-        className="my-2 p-2 border-2 border-gray-200 rounded-md"
+        className="my-2 p-2 border-2 border-gray-200 rounded-md md:w-3/6 mx-auto"
         required
       />
 
