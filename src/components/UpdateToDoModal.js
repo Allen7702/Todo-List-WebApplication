@@ -56,9 +56,9 @@ const UpdateToDoModal = ({ fetchTodos, todoToUpdate, setTodoToUpdate }) => {
     <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
       <form
         onSubmit={handleSubmit}
-        className="flex flex-col p-6 bg-white rounded-md w-[30%] h-[35%]"
+        className="flex flex-col md:p-6 p-2 bg-white rounded-md md:w-[30%] md:h-[35%]"
       >
-        <label htmlFor="title" className="mt-6 text-lg font-bold text-gray-600">
+        <label htmlFor="title" className="mt-2 text-lg font-bold text-gray-600">
           Title
         </label>
         <input
@@ -68,7 +68,7 @@ const UpdateToDoModal = ({ fetchTodos, todoToUpdate, setTodoToUpdate }) => {
           className="p-2 border-2 border-gray-200 rounded-md"
           required
         />
-        <label htmlFor="title" className="mt-6 text-lg font-bold text-gray-600">
+        <label htmlFor="title" className="mt-2 text-lg font-bold text-gray-600">
           Description
         </label>
         <input
