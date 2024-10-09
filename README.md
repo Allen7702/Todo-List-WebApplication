@@ -1,4 +1,4 @@
-<h3 align="center">This is a full-featured To-Do application built with React and DHIS2 dataStore API. It features a clean and responsive user interface styled with Tailwind CSS.</h3>
+<h3 align="center">This is a full-featured To-Do application built with React and DHIS2 dataStore API. It features a clean and responsive User Interface styled with Tailwind CSS.</h3>
 <p>Video link:</p>
 [todo-video.webm](https://github.com/Allen7702/Todo-List-WebApplication/assets/83769589/0ea97a08-576a-458e-97a8-4daa61128238)<br/>
 
